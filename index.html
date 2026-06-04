@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>SMART on FHIR Generic Client</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
+  <script src="./config.js"></script>
+
+  <style>
+    body {
+      font-family: monospace;
+      white-space: pre-wrap;
+      padding: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+    }
+    .danger {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>SMART on FHIR Generic Client</h2>
+  <pre id="info">Initializing...</pre>
+  <button id="go" disabled>Send to Downstream APP</button>
+
+  <script>
+    const info = document.getElementById("info");
+    const goButton = document.getElementById("go");
+
+    let config = null;
+    let client = null;
+    let accessToken = null;
+    let fhirBase = null;
+    let patientId = null;
+    let selectedResourceUrl = null;
+    let selectedResource = null;
+
+    function append(msg) {
+      info.textContent += "\n" + msg;
+    }
+
+    function buildAbsoluteFhirUrl(path) {
+      if (path.startsWith("http://") || path.startsWith("https://")) {
+        return path;
+      }
+      return fhirBase.replace(/\/$/, "") + "/" + path.replace(/^\//, "");
+    }
+
+    async function loadPatientContext() {
+      // fhirclient 通常會把 EHR launch context 的 patient 放在 client.patient.id
+      if (client.patient && client.patient.id) {
+        patientId = client.patient.id;
+        append("Patient context from launch: " + patientId);
+        return patientId;
+      }
+
+      // 有些 server 會把 patient 放在 tokenResponse.patient
+      const tokenPatient = client.state?.tokenResponse?.patient;
+      if (tokenPatient) {
+        patientId = tokenPatient;
+        append("Patient context from token response: " + patientId);
+        return patientId;
+      }
+
+      append("No patient context found.");
+      return null;
+    }
+
+    async function loadFixedResource() {
+      if (!config.fixedResourceUrl) {
+        throw new Error("fixedResourceUrl is empty in config.js");
+      }
+
+      selectedResourceUrl = config.fixedResourceUrl;
+      append("Fetching fixed resource: " + selectedResourceUrl);
+
+      selectedResource = await client.request(selectedResourceUrl);
+
+      const ref = selectedResource.subject?.reference;
+      if (ref && ref.startsWith("Patient/")) {
+        patientId = ref.replace("Patient/", "");
+      }
+
+      return selectedResource;
+    }
+
+    async function loadPatientObservations() {
+      const pid = await loadPatientContext();
+
+      if (!pid) {
+        throw new Error("Cannot query Observation because patient context is missing.");
+      }
+
+      const query = "Observation?patient=" + encodeURIComponent(pid) + "&_count=10";
+      selectedResourceUrl = buildAbsoluteFhirUrl(query);
+
+      append("Fetching patient observations: " + selectedResourceUrl);
+
+      selectedResource = await client.request(query);
+
+      return selectedResource;
+    }
+
+    async function main() {
+      config = window.getSmartConfig();
+
+      info.textContent =
+        "Vendor profile: " + config.vendor + "\n" +
+        "Vendor name: " + config.name + "\n" +
+        "Mode: " + config.defaultMode + "\n";
+
+      client = await FHIR.oauth2.ready();
+
+      accessToken = client.state?.tokenResponse?.access_token;
+      fhirBase = client.state?.serverUrl;
+
+      append("SMART OAuth Ready");
+      append("FHIR Server: " + fhirBase);
+
+      if (!accessToken) {
+        throw new Error("No access_token returned.");
+      }
+
+      if (config.defaultMode === "fixed-resource") {
+        await loadFixedResource();
+      } else {
+        await loadPatientObservations();
+      }
+
+      append("\nLoaded Resource:\n" + JSON.stringify(selectedResource, null, 2));
+      append("\nDerived patient id: " + patientId);
+
+      goButton.disabled = false;
+    }
+
+    goButton.onclick = () => {
+      const payload = {
+        token: accessToken,
+        pid: patientId,
+        fhir: fhirBase,
+        resourceUrl: selectedResourceUrl,
+        vendor: config.vendor
+      };
+
+      const url =
+        config.downstreamUrl +
+        "?token=" + encodeURIComponent(payload.token) +
+        "&pid=" + encodeURIComponent(payload.pid || "") +
+        "&fhir=" + encodeURIComponent(payload.fhir || "") +
+        "&resourceUrl=" + encodeURIComponent(payload.resourceUrl || "") +
+        "&vendor=" + encodeURIComponent(payload.vendor || "");
+
+      console.log("Sending to downstream app:", payload);
+      window.location.href = url;
+    };
+
+    main().catch(err => {
+      info.innerHTML = "❌ Error:\n" + String(err.stack || err);
+      info.className = "danger";
+    });
+  </script>
+</body>
+</html>

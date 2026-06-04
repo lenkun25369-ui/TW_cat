@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>SMART EHR Launch</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
+  <script src="./config.js"></script>
+</head>
+
+<body>
+  <h2>Launching SMART on FHIR App...</h2>
+  <pre id="log">Initializing...</pre>
+
+  <script>
+    const log = (msg) => {
+      document.getElementById("log").textContent += "\n" + msg;
+    };
+
+    try {
+      const config = window.getSmartConfig();
+      const params = new URLSearchParams(window.location.search);
+
+      const iss = params.get("iss") || config.defaultIss;
+      const launch = params.get("launch");
+
+      document.getElementById("log").textContent =
+        "Vendor profile: " + config.vendor + "\n" +
+        "Vendor name: " + config.name + "\n" +
+        "Client ID: " + config.clientId + "\n" +
+        "Redirect URI: " + config.redirectUri + "\n" +
+        "Scope: " + config.scope + "\n" +
+        "Issuer: " + iss + "\n" +
+        "Launch: " + launch;
+
+      if (!iss) {
+        throw new Error("Missing iss. EHR Launch requires iss from vendor, or defaultIss in config.js.");
+      }
+
+      const authorizeOptions = {
+        clientId: config.clientId,
+        scope: config.scope,
+        redirectUri: config.redirectUri,
+        iss: iss
+      };
+
+      // EHR Launch 時通常會有 launch；Standalone 測試時可能沒有
+      if (launch) {
+        authorizeOptions.launch = launch;
+      }
+
+      FHIR.oauth2.authorize(authorizeOptions);
+
+    } catch (err) {
+      document.body.innerHTML =
+        "<h2 style='color:red'>SMART Launch Error</h2>" +
+        "<pre>" + String(err.stack || err) + "</pre>";
+    }
+  </script>
+</body>
+</html>
