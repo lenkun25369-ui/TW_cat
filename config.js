@@ -4,27 +4,6 @@
  * 之後跟不同廠商銜接時，主要改這裡。
  */
 window.SMART_CONFIGS = {
-  mohw: {
-    name: "MOHW Sandbox",
-    clientId: "mohw-smart-dashboard",
-    redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
-
-    // EHR Launch 常用 scope
-    scope: "launch launch/patient openid fhirUser patient/*.read",
-
-    // 若 launch URL 沒有帶 iss，可用 defaultIss 補上；正式 EHR launch 通常由對方帶入 iss
-    defaultIss: "",
-
-    // 預設讀取模式
-    defaultMode: "patient-observations",
-
-    // 可選：固定讀某個 resource，demo 或測試用
-    fixedResourceUrl: "https://thas.mohw.gov.tw/v/r4/fhir/Observation/680277",
-
-    // 下游模型或 Shiny app
-    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
-  },
-
   vendorA: {
     name: "Vendor A Sandbox",
     clientId: "REPLACE_WITH_VENDOR_A_CLIENT_ID",
@@ -45,7 +24,28 @@ window.SMART_CONFIGS = {
     defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
+  },
+  mohw: {
+    name: "Vendor C Sandbox",
+    clientId: "REPLACE_WITH_VENDOR_B_CLIENT_ID",
+    redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
+
+    // EHR Launch 常用 scope
+    scope: "launch launch/patient openid fhirUser patient/*.read",
+
+    // 若 launch URL 沒有帶 iss，可用 defaultIss 補上；正式 EHR launch 通常由對方帶入 iss
+    defaultIss: "",
+
+    // 預設讀取模式
+    defaultMode: "patient-observations",
+
+    // 可選：固定讀某個 resource，demo 或測試用
+    fixedResourceUrl: "",
+
+    // 下游模型或 Shiny app
+    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   }
+  
 };
 
 window.getSmartConfig = function () {
