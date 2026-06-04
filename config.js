@@ -1,6 +1,12 @@
 /**
  * SMART on FHIR vendor profiles
  * 之後跟不同廠商銜接時，主要改這裡。
+clientId
+redirectUri
+  offer:https://lenkun25369-ui.github.io/TW_cat/index.html
+ scope:檢查讀哪些
+defaultIss:油一開始寫在網址或是修改
+ 
  */
 window.SMART_CONFIGS = {
   vendorA: {
@@ -8,7 +14,7 @@ window.SMART_CONFIGS = {
     clientId: "REPLACE_WITH_VENDOR_A_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/*.read",
-    defaultIss: "https://vendor-a.example.com/fhir",
+    defaultIss: "",
     defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
@@ -19,7 +25,7 @@ window.SMART_CONFIGS = {
     clientId: "REPLACE_WITH_VENDOR_B_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
-    defaultIss: "https://vendor-b.example.com/fhir/r4",
+    defaultIss: "",
     defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
