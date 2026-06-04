@@ -25,7 +25,7 @@ window.SMART_CONFIGS = {
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   },
-  mohw: {
+  vendorC: {
     name: "Vendor C Sandbox",
     clientId: "REPLACE_WITH_VENDOR_B_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
