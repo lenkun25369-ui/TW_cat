@@ -7,7 +7,7 @@ window.SMART_CONFIGS = {
   mohw: {
     name: "MOHW Sandbox",
     clientId: "mohw-smart-dashboard",
-    redirectUri: " https://lenkun25369-ui.github.io/TW_cat/index.html",
+    redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
 
     // EHR Launch 常用 scope
     scope: "launch launch/patient openid fhirUser patient/*.read",
