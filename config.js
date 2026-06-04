@@ -1,4 +1,3 @@
-
 /**
  * SMART on FHIR vendor profiles
  * 之後跟不同廠商銜接時，主要改這裡。
@@ -25,32 +24,22 @@ window.SMART_CONFIGS = {
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   },
+
   vendorC: {
     name: "Vendor C Sandbox",
-    clientId: "REPLACE_WITH_VENDOR_B_CLIENT_ID",
+    clientId: "REPLACE_WITH_VENDOR_C_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
-
-    // EHR Launch 常用 scope
     scope: "launch launch/patient openid fhirUser patient/*.read",
-
-    // 若 launch URL 沒有帶 iss，可用 defaultIss 補上；正式 EHR launch 通常由對方帶入 iss
     defaultIss: "",
-
-    // 預設讀取模式
     defaultMode: "patient-observations",
-
-    // 可選：固定讀某個 resource，demo 或測試用
     fixedResourceUrl: "",
-
-    // 下游模型或 Shiny app
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   }
-  
 };
 
 window.getSmartConfig = function () {
   const params = new URLSearchParams(window.location.search);
-  const vendor = params.get("vendor") || "mohw";
+  const vendor = params.get("vendor") || "vendorC";
   const config = window.SMART_CONFIGS[vendor];
 
   if (!config) {
@@ -59,4 +48,3 @@ window.getSmartConfig = function () {
 
   return { vendor, ...config };
 };
-
