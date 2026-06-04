@@ -7,7 +7,7 @@ window.SMART_CONFIGS = {
   mohw: {
     name: "MOHW Sandbox",
     clientId: "mohw-smart-dashboard",
-    redirectUri: "https://lenkun25369-ui.github.io/SMART_For_FLU/index.html",
+    redirectUri: " https://lenkun25369-ui.github.io/TW_cat/index.html",
 
     // EHR Launch 常用 scope
     scope: "launch launch/patient openid fhirUser patient/*.read",
@@ -28,7 +28,7 @@ window.SMART_CONFIGS = {
   vendorA: {
     name: "Vendor A Sandbox",
     clientId: "REPLACE_WITH_VENDOR_A_CLIENT_ID",
-    redirectUri: "https://your-domain.example.com/index.html",
+    redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/*.read",
     defaultIss: "https://vendor-a.example.com/fhir",
     defaultMode: "patient-observations",
@@ -39,7 +39,7 @@ window.SMART_CONFIGS = {
   vendorB: {
     name: "Vendor B Sandbox",
     clientId: "REPLACE_WITH_VENDOR_B_CLIENT_ID",
-    redirectUri: "https://your-domain.example.com/index.html",
+    redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
     defaultIss: "https://vendor-b.example.com/fhir/r4",
     defaultMode: "patient-observations",
