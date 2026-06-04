@@ -1,4 +1,4 @@
-<script>
+
 /**
  * SMART on FHIR vendor profiles
  * 之後跟不同廠商銜接時，主要改這裡。
@@ -59,4 +59,4 @@ window.getSmartConfig = function () {
 
   return { vendor, ...config };
 };
-</script>
+
