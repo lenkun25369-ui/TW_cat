@@ -49,7 +49,7 @@ window.SMART_CONFIGS = {
     defaultIss: "",
     defaultMode: "patient-observations",// TW_cat 內部模式：授權後查 Observation?patient={patientId}
     fixedResourceUrl: "",// 若 defaultMode = "fixed-resource"，才需要填單一 Observation URL
-    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
+    downstreamUrl: "https://flu-for-tw-cat.onrender.com/"
   },
 
   vendorB: {
@@ -60,7 +60,7 @@ window.SMART_CONFIGS = {
     defaultIss: "",
     defaultMode: "patient-observations",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
-    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
+    downstreamUrl: "https://flu-for-tw-cat.onrender.com/"
   },
 
   vendorC: {
@@ -71,7 +71,7 @@ window.SMART_CONFIGS = {
     defaultIss: "",
     defaultMode: "patient-observations",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
-    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
+    downstreamUrl: "https://flu-for-tw-cat.onrender.com/"
   }
 };
 
