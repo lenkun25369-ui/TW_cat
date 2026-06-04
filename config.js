@@ -1,12 +1,23 @@
 /**
  * SMART on FHIR vendor profiles
- * 之後跟不同廠商銜接時，主要改這裡。
-clientId
-redirectUri
-  offer:https://lenkun25369-ui.github.io/TW_cat/index.html
- scope:檢查讀哪些
-defaultIss:油一開始寫在網址或是修改
- 
+ * 之後跟不同廠商銜接時，主要修改這裡。
+ *
+ * 需要跟廠商確認：
+ * 1. clientId:
+ *    由廠商 Authorization Server 提供，必須與廠商註冊資料一致。
+ *
+ * 2. redirectUri:
+ *    提供給廠商註冊的 callback URL。
+ *    目前固定使用：
+ *    https://lenkun25369-ui.github.io/TW_cat/index.html
+ *
+ * 3. scope:
+ *    依據 APP 需要讀取的 FHIR resource 調整，
+ *    例如 Patient、Observation、Encounter 等。
+ *
+ * 4. defaultIss:
+ *    若廠商 EHR Launch 會自動帶入 iss，這裡可留空。
+ *    若要手動測試，可填入廠商 FHIR Server base URL。
  */
 window.SMART_CONFIGS = {
   vendorA: {
