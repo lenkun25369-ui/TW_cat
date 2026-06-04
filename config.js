@@ -33,7 +33,7 @@ window.SMART_CONFIGS = {
     defaultIss: "https://vendor-a.example.com/fhir",
     defaultMode: "patient-observations",
     fixedResourceUrl: "",
-    downstreamUrl: "https://your-downstream-app.example.com/"
+    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   },
 
   vendorB: {
@@ -44,7 +44,7 @@ window.SMART_CONFIGS = {
     defaultIss: "https://vendor-b.example.com/fhir/r4",
     defaultMode: "patient-observations",
     fixedResourceUrl: "",
-    downstreamUrl: "https://your-downstream-app.example.com/"
+    downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   }
 };
 
