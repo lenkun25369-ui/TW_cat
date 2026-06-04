@@ -26,7 +26,7 @@ window.SMART_CONFIGS = {
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/*.read",
     defaultIss: "",
-    defaultMode: "patient-observations",
+    defaultMode: "fixed-resource",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   },
@@ -37,7 +37,7 @@ window.SMART_CONFIGS = {
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
     defaultIss: "",
-    defaultMode: "patient-observations",
+    defaultMode: "fixed-resource",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   },
@@ -48,7 +48,7 @@ window.SMART_CONFIGS = {
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch launch/patient openid fhirUser patient/*.read",
     defaultIss: "",
-    defaultMode: "patient-observations",
+    defaultMode: "fixed-resource",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-prediction-v2-2-ui-enhance.onrender.com/"
   }
