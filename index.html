@@ -115,6 +115,24 @@
         "Vendor name: " + config.name + "\n" +
         "Mode: " + config.defaultMode + "\n";
 
+      // ===== TWCAT / Gazelle 聯測用：顯示 callback 回來的 authorization code =====
+      // 這裡的 code 是 OAuth Authorization Code，不是程式碼。
+      // 必須放在 FHIR.oauth2.ready() 前面，避免 library 處理後 URL 狀態改變。
+      const callbackParams = new URLSearchParams(window.location.search);
+      const authorizationCode = callbackParams.get("code");
+      const state = callbackParams.get("state");
+
+      if (authorizationCode) {
+        append("Authorization code from callback: " + authorizationCode);
+      } else {
+        append("No authorization code found in callback URL.");
+      }
+
+      if (state) {
+        append("State from callback: " + state);
+      }
+      // =====================================================================
+
       client = await FHIR.oauth2.ready();
 
       accessToken = client.state?.tokenResponse?.access_token;
