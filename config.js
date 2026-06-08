@@ -45,7 +45,7 @@ window.SMART_CONFIGS = {
     name: "Vendor A Sandbox",
     clientId: "REPLACE_WITH_VENDOR_A_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
-    scope: "launch launch/patient openid fhirUser patient/*.read",
+    scope: "launch launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
     defaultIss: "",
     defaultMode: "patient-observations",// TW_cat 內部模式：授權後查 Observation?patient={patientId}
     fixedResourceUrl: "",// 若 defaultMode = "fixed-resource"，才需要填單一 Observation URL
