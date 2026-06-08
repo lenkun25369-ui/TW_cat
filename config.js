@@ -67,7 +67,7 @@ window.SMART_CONFIGS = {
     name: "Vendor C Sandbox",
     clientId: "REPLACE_WITH_VENDOR_C_CLIENT_ID",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
-    scope: "launch launch/patient openid fhirUser patient/*.read",
+    scope: "launch launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
     defaultIss: "",
     defaultMode: "patient-observations",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
