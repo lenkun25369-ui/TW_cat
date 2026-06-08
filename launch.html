@@ -19,6 +19,7 @@
 
     try {
       const config = window.getSmartConfig();
+      essionStorage.setItem("smart_vendor", config.vendor);//記住vender
       const params = new URLSearchParams(window.location.search);
 
       const iss = params.get("iss") || config.defaultIss;
