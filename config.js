@@ -77,7 +77,12 @@ window.SMART_CONFIGS = {
 
 window.getSmartConfig = function () {
   const params = new URLSearchParams(window.location.search);
-  const vendor = params.get("vendor") || "vendorC";
+
+  const vendor =
+    params.get("vendor") ||
+    sessionStorage.getItem("smart_vendor") ||
+    "vendorA";
+
   const config = window.SMART_CONFIGS[vendor];
 
   if (!config) {
