@@ -57,7 +57,7 @@ window.SMART_CONFIGS = {
     clientId: "muen",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
     scope: "launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
-    defaultIss: "http://192.168.2.213:8080/fhir",
+    defaultIss: "http://192.168.2.213:8080",
     defaultMode: "patient-observations",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
     downstreamUrl: "https://flu-for-tw-cat.onrender.com/"
