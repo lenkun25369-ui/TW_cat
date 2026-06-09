@@ -135,7 +135,8 @@
         "Vendor profile: " + config.vendor + "\n" +
         "Vendor name: " + config.name + "\n" +
         "Mode: " + config.defaultMode + "\n";
-
+      append("Participant token configured: " + (config.participantToken ? "YES" : "NO"));
+      append("Default patient id: " + (config.defaultPatientId || "not set"));
       // ===== TWCAT / Gazelle 聯測用：顯示 callback 回來的 authorization code =====
       // 這裡的 code 是 OAuth Authorization Code，不是程式碼。
       // 必須放在 FHIR.oauth2.ready() 前面，避免 library 處理後 URL 狀態改變。
