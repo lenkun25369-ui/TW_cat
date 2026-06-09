@@ -102,10 +102,13 @@
 
       append("Fetching patient observations: " + selectedResourceUrl);
 
+      const extraHeaders = {};
+      if (config.participantToken) {
+        extraHeaders["X-Participant-Token"] = config.participantToken;
+      }
+      
       selectedResource = await client.request(query, {
-        headers: {
-          "X-Participant-Token": config.participantToken || ""
-        }
+        headers: extraHeaders
       });
 
       return selectedResource;
