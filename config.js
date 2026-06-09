@@ -51,7 +51,7 @@ window.SMART_CONFIGS = {
     fixedResourceUrl: "",// 若 defaultMode = "fixed-resource"，才需要填單一 Observation URL
     downstreamUrl: "https://flu-for-tw-cat.onrender.com/",
     defaultPatientId: "1",
-    participantToken: X-Participant-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU0LCJpbnN0aXR1dGlvbklkIjoyNywiaWF0IjoxNzgwOTc1NjUxLCJleHAiOjE3ODM1Njc2NTF9.IFjMLVukmLMvpLHmP8Y-ByiIl_O0MjN4uxaxs0FvVTo
+    participantToken: "X-Participant-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU0LCJpbnN0aXR1dGlvbklkIjoyNywiaWF0IjoxNzgwOTc1NjUxLCJleHAiOjE3ODM1Njc2NTF9.IFjMLVukmLMvpLHmP8Y-ByiIl_O0MjN4uxaxs0FvVTo"
   },
 
   vendorB: {
