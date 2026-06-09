@@ -73,7 +73,7 @@
           log("Authorize options:");
           log(JSON.stringify(authorizeOptions, null, 2));
 
-          FHIR.oauth2.authorize(authorizeOptions);
+          await FHIR.oauth2.authorize(authorizeOptions);
 
         } catch (err) {
           log("Authorize Error:");
