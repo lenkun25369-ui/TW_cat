@@ -52,6 +52,16 @@
       return fhirBase.replace(/\/$/, "") + "/" + path.replace(/^\//, "");
     }
 
+    function getExtraHeaders() {
+      const extraHeaders = {};
+
+      if (config && config.participantToken) {
+        extraHeaders["X-Participant-Token"] = config.participantToken;
+      }
+
+      return extraHeaders;
+    }
+
     async function loadPatientContext() {
       // fhirclient 通常會把 EHR launch context 的 patient 放在 client.patient.id
       if (client.patient && client.patient.id) {
@@ -80,13 +90,8 @@
       selectedResourceUrl = config.fixedResourceUrl;
       append("Fetching fixed resource: " + selectedResourceUrl);
 
-      const extraHeaders = {};
-      if (config.participantToken) {
-        extraHeaders["X-Participant-Token"] = config.participantToken;
-      }
-      
       selectedResource = await client.request(selectedResourceUrl, {
-        headers: extraHeaders
+        headers: getExtraHeaders()
       });
 
       const ref = selectedResource.subject?.reference;
@@ -109,13 +114,8 @@
 
       append("Fetching patient observations: " + selectedResourceUrl);
 
-      const extraHeaders = {};
-      if (config.participantToken) {
-        extraHeaders["X-Participant-Token"] = config.participantToken;
-      }
-      
       selectedResource = await client.request(query, {
-        headers: extraHeaders
+        headers: getExtraHeaders()
       });
 
       return selectedResource;
