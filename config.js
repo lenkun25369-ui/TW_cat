@@ -56,7 +56,8 @@ window.SMART_CONFIGS = {
     name: "Muen SMART on FHIR Server",
     clientId: "muen",
     redirectUri: "https://lenkun25369-ui.github.io/TW_cat/index.html",
-    scope: "launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
+    scope: patient/*.* user/*.* launch launch/patient launch/encounter openid fhirUser profile offline_access
+    //"launch/patient openid fhirUser patient/Patient.read patient/Observation.read",
     defaultIss: "http://192.168.2.213:8080",
     defaultMode: "patient-observations",//defaultMode: "patient-observations",
     fixedResourceUrl: "",
