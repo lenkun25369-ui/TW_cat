@@ -19,6 +19,35 @@
       logBox.textContent += "\n" + msg;
     }
 
+    function base64UrlEncode(arrayBuffer) {
+      const bytes = new Uint8Array(arrayBuffer);
+      let binary = "";
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+
+      return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+    }
+
+    function generateRandomString(byteLength) {
+      const array = new Uint8Array(byteLength);
+      window.crypto.getRandomValues(array);
+
+      return Array.from(array)
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function generateCodeChallenge(codeVerifier) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(codeVerifier);
+      const digest = await window.crypto.subtle.digest("SHA-256", data);
+      return base64UrlEncode(digest);
+    }
+
     try {
       const config = window.getSmartConfig();
 
@@ -50,12 +79,6 @@
         iss: iss
       };
 
-      // Vendor B 要求 PKCE，所以只對 vendorB 強制開啟
-      if (config.vendor === "vendorB") {
-        authorizeOptions.pkceMode = "required";
-        log("PKCE mode: required for vendorB");
-      }
-
       // EHR Launch 時通常會有 launch；Standalone 測試時可能沒有
       if (launch) {
         authorizeOptions.launch = launch;
@@ -69,6 +92,58 @@
       btn.onclick = async () => {
         try {
           log("Authorization button clicked.");
+
+          /*
+            Vendor B workaround:
+            Vendor B 要求 authorize URL 直接包含：
+            state
+            code_challenge
+            code_challenge_method=S256
+
+            因為 Vendor B 的 SMART configuration 沒有宣告 S256，
+            fhirclient.js 會在送出 authorize request 前停止。
+            所以 Vendor B 改成手動組 authorize URL。
+          */
+          if (config.vendor === "vendorB") {
+            log("Using manual PKCE authorize URL for Vendor B.");
+
+            const state = generateRandomString(16);
+            const codeVerifier = generateRandomString(64);
+            const codeChallenge = await generateCodeChallenge(codeVerifier);
+
+            // 儲存給 index.html callback 後換 token 使用
+            sessionStorage.setItem("smart_vendor", "vendorB");
+            sessionStorage.setItem("vendorB_state", state);
+            sessionStorage.setItem("vendorB_code_verifier", codeVerifier);
+            sessionStorage.setItem("vendorB_iss", iss);
+
+            const vendorBAuthorizeEndpoint =
+              "http://192.168.2.213:9090/oauth2/authorize";
+
+            const vendorBScope =
+              "openid profile fhirUser";
+
+            const authorizeUrl =
+              vendorBAuthorizeEndpoint +
+              "?response_type=code" +
+              "&client_id=" + encodeURIComponent("muen") +
+              "&scope=" + encodeURIComponent(vendorBScope) +
+              "&redirect_uri=" + encodeURIComponent(config.redirectUri) +
+              "&state=" + encodeURIComponent(state) +
+              "&code_challenge=" + encodeURIComponent(codeChallenge) +
+              "&code_challenge_method=S256";
+
+            log("Vendor B authorize URL:");
+            log(authorizeUrl);
+
+            window.location.href = authorizeUrl;
+            return;
+          }
+
+          /*
+            Vendor A / Vendor C:
+            使用原本 fhirclient.js SMART authorize 流程。
+          */
           log("Calling FHIR.oauth2.authorize...");
           log("Authorize options:");
           log(JSON.stringify(authorizeOptions, null, 2));
