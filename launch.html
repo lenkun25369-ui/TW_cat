@@ -42,10 +42,12 @@
         clientId: config.clientId,
         scope: config.scope,
         redirectUri: config.redirectUri,
-        iss: iss,
-        pkceMode: "required"
-      };
+        iss: iss
 
+      };
+      if (config.vendor === "vendorB") {
+        authorizeOptions.pkceMode = "required";
+      }
       // EHR Launch 時通常會有 launch；Standalone 測試時可能沒有
       if (launch) {
         authorizeOptions.launch = launch;
