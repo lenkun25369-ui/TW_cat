@@ -5,7 +5,7 @@
   <title>SMART EHR Launch</title>
 
   <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
-  <script src="./config.js"></script>
+  <script src="./config.js?v=20260609b"></script>
 </head>
 
 <body>
@@ -13,19 +13,24 @@
   <pre id="log">Initializing...</pre>
 
   <script>
-    const log = (msg) => {
-      document.getElementById("log").textContent += "\n" + msg;
-    };
+    const logBox = document.getElementById("log");
+
+    function log(msg) {
+      logBox.textContent += "\n" + msg;
+    }
 
     try {
       const config = window.getSmartConfig();
-      sessionStorage.setItem("smart_vendor", config.vendor);//記住vender
+
+      // 記住目前 vendor，callback 到 index.html 時還能知道是 vendorA/vendorB/vendorC
+      sessionStorage.setItem("smart_vendor", config.vendor);
+
       const params = new URLSearchParams(window.location.search);
 
       const iss = params.get("iss") || config.defaultIss;
       const launch = params.get("launch");
 
-      document.getElementById("log").textContent =
+      logBox.textContent =
         "Vendor profile: " + config.vendor + "\n" +
         "Vendor name: " + config.name + "\n" +
         "Client ID: " + config.clientId + "\n" +
@@ -43,22 +48,39 @@
         scope: config.scope,
         redirectUri: config.redirectUri,
         iss: iss
-
       };
+
+      // Vendor B 要求 PKCE，所以只對 vendorB 強制開啟
       if (config.vendor === "vendorB") {
         authorizeOptions.pkceMode = "required";
+        log("PKCE mode: required for vendorB");
       }
+
       // EHR Launch 時通常會有 launch；Standalone 測試時可能沒有
       if (launch) {
         authorizeOptions.launch = launch;
       }
 
-      // 不立刻跳轉
       const btn = document.createElement("button");
       btn.textContent = "Continue Authorization";
       btn.style.marginTop = "1rem";
       btn.style.padding = "0.6rem 1.2rem";
-      btn.onclick = () => FHIR.oauth2.authorize(authorizeOptions);
+
+      btn.onclick = async () => {
+        try {
+          log("Authorization button clicked.");
+          log("Calling FHIR.oauth2.authorize...");
+          log("Authorize options:");
+          log(JSON.stringify(authorizeOptions, null, 2));
+
+          FHIR.oauth2.authorize(authorizeOptions);
+
+        } catch (err) {
+          log("Authorize Error:");
+          log(String(err.stack || err));
+        }
+      };
+
       document.body.appendChild(btn);
 
     } catch (err) {
