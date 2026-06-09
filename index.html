@@ -80,7 +80,14 @@
       selectedResourceUrl = config.fixedResourceUrl;
       append("Fetching fixed resource: " + selectedResourceUrl);
 
-      selectedResource = await client.request(selectedResourceUrl);
+      const extraHeaders = {};
+      if (config.participantToken) {
+        extraHeaders["X-Participant-Token"] = config.participantToken;
+      }
+      
+      selectedResource = await client.request(selectedResourceUrl, {
+        headers: extraHeaders
+      });
 
       const ref = selectedResource.subject?.reference;
       if (ref && ref.startsWith("Patient/")) {
