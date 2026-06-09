@@ -102,7 +102,11 @@
 
       append("Fetching patient observations: " + selectedResourceUrl);
 
-      selectedResource = await client.request(query);
+      selectedResource = await client.request(query, {
+        headers: {
+          "X-Participant-Token": config.participantToken || ""
+        }
+      });
 
       return selectedResource;
     }
