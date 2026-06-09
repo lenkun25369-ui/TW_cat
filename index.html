@@ -5,7 +5,7 @@
   <title>SMART on FHIR Generic Client</title>
 
   <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
-  <script src="./config.js?v=20260609a"></script>
+  <script src="./config.js?v=20260609b"></script>
 
   <style>
     body {
@@ -97,7 +97,8 @@
       selectedResourceUrl = config.fixedResourceUrl;
       append("Fetching fixed resource: " + selectedResourceUrl);
 
-      selectedResource = await client.request(selectedResourceUrl, {
+      selectedResource = await client.request({
+        url: selectedResourceUrl,
         headers: getExtraHeaders()
       });
 
@@ -121,7 +122,8 @@
 
       append("Fetching patient observations: " + selectedResourceUrl);
 
-      selectedResource = await client.request(query, {
+      selectedResource = await client.request({
+        url: query,
         headers: getExtraHeaders()
       });
 
@@ -135,8 +137,10 @@
         "Vendor profile: " + config.vendor + "\n" +
         "Vendor name: " + config.name + "\n" +
         "Mode: " + config.defaultMode + "\n";
+
       append("Participant token configured: " + (config.participantToken ? "YES" : "NO"));
       append("Default patient id: " + (config.defaultPatientId || "not set"));
+
       // ===== TWCAT / Gazelle 聯測用：顯示 callback 回來的 authorization code =====
       // 這裡的 code 是 OAuth Authorization Code，不是程式碼。
       // 必須放在 FHIR.oauth2.ready() 前面，避免 library 處理後 URL 狀態改變。
