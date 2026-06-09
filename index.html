@@ -5,7 +5,7 @@
   <title>SMART on FHIR Generic Client</title>
 
   <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
-  <script src="./config.js"></script>
+  <script src="./config.js?v=20260609a"></script>
 
   <style>
     body {
@@ -69,7 +69,7 @@
         append("Patient context from launch: " + patientId);
         return patientId;
       }
-    
+
       // 有些 server 會把 patient 放在 tokenResponse.patient
       const tokenPatient = client.state?.tokenResponse?.patient;
       if (tokenPatient) {
@@ -77,14 +77,14 @@
         append("Patient context from token response: " + patientId);
         return patientId;
       }
-    
+
       // 如果 config.js 有設定固定 patient id，例如 Vendor A 的 patient = 1
       if (config.defaultPatientId) {
         patientId = config.defaultPatientId;
         append("No patient context found. Using configured patient id: " + patientId);
         return patientId;
       }
-    
+
       append("No patient context found.");
       return null;
     }
