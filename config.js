@@ -50,6 +50,7 @@ window.SMART_CONFIGS = {
     defaultMode: "patient-observations",// TW_cat 內部模式：授權後查 Observation?patient={patientId}
     fixedResourceUrl: "",// 若 defaultMode = "fixed-resource"，才需要填單一 Observation URL
     downstreamUrl: "https://flu-for-tw-cat.onrender.com/"
+    participantToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU0LCJpbnN0aXR1dGlvbklkIjoyNywiaWF0IjoxNzgwOTc1NjUxLCJleHAiOjE3ODM1Njc2NTF9.IFjMLVukmLMvpLHmP8Y-ByiIl_O0MjN4uxaxs0FvVTo"
   },
 
   vendorB: {
